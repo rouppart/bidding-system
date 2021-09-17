@@ -1,14 +1,18 @@
 <script lang="ts">
-  import type {Bids, Bid} from '../global.d.';
+  import type {LaborBid} from '../global';
 
-  export let bids: Bids;
+  export let bids: LaborBid[];
 
-  function deleteBid(bid: Bid) {
-    bids = bids.filter((b) => bid !== b)
+  function deleteBid(bid: LaborBid) {
+    if (bids.length > 2) {
+      bids = bids.filter(e => e !== bid);
+    } else {
+      alert('Cannot have less than 2 bids');
+    }
   }
 
   function addBid() {
-    const newBid: Bid = {name: '', bid: 0};
+    const newBid: LaborBid = {name: '', capacity: 1, buy: 0, sell: 0};
     bids = [...bids, newBid];
   }
 </script>
@@ -22,12 +26,16 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Price</th>
+    <th>Capacity</th>
+    <th>Buy</th>
+    <th>Sell</th>
   </tr>
   {#each bids as bid}
     <tr>
       <td><input type="text" class="w-48" bind:value={bid.name}></td>
-      <td><input type="number" class="w-24" bind:value={bid.bid}></td>
+      <td><input type="number" class="w-24" bind:value={bid.capacity}></td>
+      <td><input type="number" class="w-24" bind:value={bid.buy}></td>
+      <td><input type="number" class="w-24" bind:value={bid.sell}></td>
       <td><button class="font-bold text-gray-500 px-2 py-1" on:click={deleteBid.bind(null, bid)}>X</button></td>
     </tr>
   {/each}

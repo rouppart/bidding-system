@@ -1,3 +1,5 @@
+import type {SimpleBid} from "./global";
+
 export default [
   {name: '1', bid: 46},
   {name: '2', bid: 44},
@@ -13,4 +15,4 @@ export default [
   {name: '12', bid: 3},
   {name: '13', bid: 2},
   {name: '14', bid: 1}
-]
+] as SimpleBid[]
