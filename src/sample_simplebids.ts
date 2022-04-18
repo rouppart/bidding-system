@@ -1,4 +1,4 @@
-import type {SimpleBid} from "./global";
+import type {SimpleBid} from "./vite-env";
 
 export default [
   {name: '1', bid: 46},

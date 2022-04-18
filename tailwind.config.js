@@ -1,11 +1,6 @@
-module.exports = {
-  mode: 'jit',
-  purge: ["src/**/*.svelte", "public/index.html"],
-  darkMode: false, // or 'media' or 'class'
+export default {
+  content: ["./index.html", './src/**/*.{svelte,js,ts}'],
   theme: {
-    extend: {},
-  },
-  variants: {
     extend: {},
   },
   plugins: [],

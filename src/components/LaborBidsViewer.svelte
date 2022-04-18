@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type {LaborBid, ProcessedLaborBid} from '../global';
+  import type {LaborBid, ProcessedLaborBid} from '../vite-env';
 
   export let bids: LaborBid[];
   export let requiredWork: number;
@@ -75,27 +75,70 @@
   }
 </script>
 
-<div class="space-x-4 lg:w-1/2 flex justify-between items-center max-w-xl my-6">
+<style lang="postcss">
+  .badge {
+    @apply inline-block w-4 h-4 rounded;
+  }
+</style>
+
+<div class="flex flex-col xl:flex-row justify-between items-center xl:w-3/4 max-w-4xl space-y-3 xl:space-y-0 my-6">
   <label>
-    <b>Required Work:</b> <input type="number" class="w-20" bind:value={requiredWork}>
+    <b>Total Required Work (Hours):</b> <input type="number" class="w-20" bind:value={requiredWork}>
   </label>
   <span>
-    <b>Neutral Work:</b> {format(neutralWork)}
+    <b>Required Work / Person (Hours):</b> {format(neutralWork)}
   </span>
   <span>
-    <b>Labor Price:</b> {format(laborPrice)}
+    <b>Labor Price ($ / Hour):</b> {format(laborPrice)}
   </span>
 </div>
 
 <table class="bidtable">
   <colgroup>
-    <col>
+    <col class="border-r-2">
     <col class="border-r-2">
   </colgroup>
+
   <tr>
-    <th>Names</th>
+    <th></th>
     <th>Bids</th>
     <th>Result</th>
+  </tr>
+
+  <tr class="border-b-2">
+    <th>Name</th>
+    <th>
+      <div class="flex justify-around">
+        <span>
+          <i class="badge bg-blue-300"></i>
+          Capacity
+        </span>
+        <span>
+          <i class="badge bg-green-300"></i>
+          Sell
+        </span>
+        <span>
+          <i class="badge bg-red-300"></i>
+          Buy
+        </span>
+      </div>
+    </th>
+    <th>
+      <div class="flex justify-around">
+        <span>
+          <i class="badge bg-red-300"></i>
+          Payment
+        </span>
+        <span>
+          <i class="badge bg-green-300"></i>
+          Compensation
+        </span>
+        <span>
+          <i class="badge bg-blue-300"></i>
+          Owed Work
+        </span>
+      </div>
+    </th>
   </tr>
 
   {#each processedBids as row}
@@ -105,13 +148,14 @@
     </td>
 
     <td class="text-right">
-      <div class="bar bg-green-300 rounded-l" style="width:{(row.sell - row.buy) / bidRemRatio}rem">
-        {row.sell}
-      </div><div class="bar bg-red-300" class:rounded-r={row.capacity === 0} style="width:{row.buy / bidRemRatio}rem">
-        {row.buy}
-      </div>{#if row.capacity !== 0}<div class="bar bg-blue-300 rounded-r" style="width:{row.capacity / capacityRatio}rem">
+      {#if row.capacity !== 0}
+      <div class="bar bg-blue-300 rounded-l" style="width:{row.capacity / capacityRatio}rem">
         {row.capacity}
-      </div>{/if}
+      </div>{/if}<div class="bar bg-green-300" class:rounded-l={row.capacity === 0} style="width:{(row.sell - row.buy) / bidRemRatio}rem">
+        {row.sell}
+      </div><div class="bar bg-red-300 rounded-r" style="width:{row.buy / bidRemRatio}rem">
+        {row.buy}
+      </div>
     </td>
 
     <td>

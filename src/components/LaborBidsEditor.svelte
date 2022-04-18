@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type {LaborBid} from '../global';
+  import type {LaborBid} from '../vite-env';
 
   export let bids: LaborBid[];
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type {SimpleBid} from '../global';
+  import type {SimpleBid} from '../vite-env';
 
   export let bids: SimpleBid[];
 
